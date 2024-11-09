@@ -136,3 +136,26 @@ numeric_imputer = SimpleImputer(strategy='mean')
 saber_2020_subset[numeric_columns] = numeric_imputer.fit_transform(saber_2020_subset[numeric_columns])
 
 
+# convertimos las variavles categóricas en dummies, transformando en columnas nuevas con 0 y 1.
+saber_2020_encoded = pd.get_dummies(saber_2020_subset, columns=categorical_columns, drop_first=True)
+
+# quitamos columnas que tienen mucha colinealidad
+columns_to_drop = ['COLE_CODIGO_ICFES', 'ESTU_NACIONALIDAD_VENEZUELA', 'FAMI_PERSONASHOGAR_5 a 6', 'COLE_CALENDARIO_B']
+
+# aplicamos cambios al df
+saber_2020_encoded.drop(columns=columns_to_drop, inplace=True)
+
+# Columnas numericas que vamos a estandarizar
+numeric_columns = ['AGE', 'PERIODO', 'ESTU_COD_RESIDE_DEPTO', 'COLE_COD_DEPTO_UBICACION']
+
+# Separamos los datos para no cometer errores
+numeric_data = saber_2020_encoded[numeric_columns]
+categorical_data = saber_2020_encoded.drop(columns=numeric_columns)
+
+# estandarizar numericas
+scaler = StandardScaler()
+numeric_data_scaled = scaler.fit_transform(numeric_data)
+
+# Rehacemos el dataframe
+numeric_data_scaled_df = pd.DataFrame(numeric_data_scaled, columns=numeric_columns, index=saber_2020_encoded.index)
+saber_2020_scaled = pd.concat([numeric_data_scaled_df, categorical_data], axis=1)
