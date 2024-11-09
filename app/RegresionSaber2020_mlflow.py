@@ -135,6 +135,7 @@ saber_2020_subset[categorical_columns] = categorical_imputer.fit_transform(saber
 numeric_imputer = SimpleImputer(strategy='mean')
 saber_2020_subset[numeric_columns] = numeric_imputer.fit_transform(saber_2020_subset[numeric_columns])
 
+# Encoding
 
 # convertimos las variavles categóricas en dummies, transformando en columnas nuevas con 0 y 1.
 saber_2020_encoded = pd.get_dummies(saber_2020_subset, columns=categorical_columns, drop_first=True)
@@ -159,3 +160,53 @@ numeric_data_scaled = scaler.fit_transform(numeric_data)
 # Rehacemos el dataframe
 numeric_data_scaled_df = pd.DataFrame(numeric_data_scaled, columns=numeric_columns, index=saber_2020_encoded.index)
 saber_2020_scaled = pd.concat([numeric_data_scaled_df, categorical_data], axis=1)
+
+#mlflow
+
+X = saber_2020_scaled
+
+y = saber_2020['PUNT_GLOBAL']
+
+y = y.values.reshape(-1, 1)
+
+# Use an imputer to fill NaN values in y (e.g., with the mean of y)
+imputer = SimpleImputer(strategy='mean')
+y = imputer.fit_transform(y)
+
+# Convert back to a 1D array if necessary for your model
+y = y.ravel()
+
+X_train, X_test, y_train, y_test = train_test_split(X, y)
+
+#Importe MLFlow para registrar los experimentos, el regresor de bosques aleatorios y la métrica de error cuadrático medio
+import mlflow
+import mlflow.sklearn
+
+
+# defina el servidor para llevar el registro de modelos y artefactos
+mlflow.set_tracking_uri('http://localhost:5000')
+# registre el experimento
+experiment = mlflow.set_experiment("Saber2020")
+
+# Aquí se ejecuta MLflow sin especificar un nombre o id del experimento. MLflow los crea un experimento para este cuaderno por defecto y guarda las características del experimento y las métricas definidas. 
+# Para ver el resultado de las corridas haga click en Experimentos en el menú izquierdo. 
+with mlflow.start_run(experiment_id=experiment.experiment_id):
+    # defina los parámetros del modelo
+    alpha = 0.0001
+    # Cree el modelo con los parámetros definidos y entrénelo
+    la = Lasso(alpha=alpha)
+    la.fit(X_train, y_train)
+    # Realice predicciones de prueba
+    predictions = la.predict(X_test)
+  
+    # Registre los parámetros
+    mlflow.log_param("alpha", alpha)
+
+  
+    # Registre el modelo
+    mlflow.sklearn.log_model(la, "lasso")
+  
+    # Cree y registre la métrica de interés
+    mse = mean_squared_error(y_test, predictions)
+    mlflow.log_metric("mse", mse)
+    print(mse)
