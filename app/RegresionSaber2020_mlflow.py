@@ -210,3 +210,90 @@ with mlflow.start_run(experiment_id=experiment.experiment_id):
     mse = mean_squared_error(y_test, predictions)
     mlflow.log_metric("mse", mse)
     print(mse)
+
+# Define relevant features
+relevant_features = [
+    "COLE_JORNADA_SABATINA",
+    "COLE_JORNADA_NOCHE",
+    "COLE_GENERO_MIXTO",
+    "COLE_JORNADA_TARDE",
+    "COLE_JORNADA_MAÑANA",
+    "COLE_JORNADA_UNICA"
+    "FAMI_ESTRATOVIVIENDA_Sin Estrato",
+    "FAMI_NUMLIBROS_26 A 100 LIBROS",
+    "FAMI_NUMLIBROS_MÁS DE 100 LIBROS", 
+    "ESTU_TIENEETNIA_Si", 
+    "FAMI_ESTRATOVIVIENDA_Sin Estrato",
+    "FAMI_EDUCACIONPADRE_Postgrado",
+    "FAMI_EDUCACIONMADRE_Postgrado",
+    "FAMI_EDUCACIONMADRE_No Aplica",
+    "FAMI_EDUCACIONMADRE_Primaria incompleta", 
+    "ESTU_DEDICACIONLECTURADIARIA_Más de 2 horas",
+    "FAMI_EDUCACIONMADRE_Ninguno",
+    "FAMI_TIENEINTERNET_Si" 
+]
+
+saber_2020_encoded['PUNT_GLOBAL'] = saber_2020['PUNT_GLOBAL']
+
+# Initialize the Dash app
+app = dash.Dash(__name__)
+
+# Layout for the app
+app.layout = html.Div([
+    html.H1("Relationship Between Relevant Features and [PUNT_GLOBAL]"),
+    
+    # Dropdown to select feature
+    html.Label("Select a Feature:"),
+    dcc.Dropdown(
+        id="feature-dropdown",
+        options=[{"label": feature, "value": feature} for feature in relevant_features],
+        value=relevant_features[0],  # Default value
+    ),
+    
+    # Graph output
+    dcc.Graph(id="feature-plot"),
+    
+    # Display additional information
+    html.Div(id="feature-info", style={'padding': '20px'})
+])
+
+# Callback to update the graph based on the selected feature
+@app.callback(
+    [Output("feature-plot", "figure"),
+     Output("feature-info", "children")],
+    [Input("feature-dropdown", "value")]
+)
+def update_graph(selected_feature):
+    # Check if the selected feature is categorical or numeric
+    if saber_2020_encoded[selected_feature].dtype == 'object' or saber_2020_encoded[selected_feature].nunique() < 10:
+        # Use box plot for categorical features
+        fig = px.box(
+            saber_2020_encoded,
+            x=selected_feature,
+            y="PUNT_GLOBAL",
+            title=f"Box Plot of {selected_feature} vs. [PUNT_GLOBAL]"
+        )
+        description = f"The box plot shows the distribution of [PUNT_GLOBAL] for each category of {selected_feature}."
+    else:
+        # Use scatter plot for numerical features
+        fig = px.scatter(
+            saber_2020_encoded,
+            x=selected_feature,
+            y="PUNT_GLOBAL",
+            trendline="ols",
+            title=f"Scatter Plot of {selected_feature} vs. [PUNT_GLOBAL]"
+        )
+        description = f"The scatter plot shows the relationship between {selected_feature} and [PUNT_GLOBAL]."
+    
+    # Style the plot
+    fig.update_layout(
+        xaxis_title=selected_feature,
+        yaxis_title="[PUNT_GLOBAL]",
+        template="plotly_white"
+    )
+    
+    return fig, description
+
+# Run the app
+if __name__ == "__main__":
+    app.run_server(debug=True)
