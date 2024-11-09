@@ -186,7 +186,7 @@ import mlflow.sklearn
 # defina el servidor para llevar el registro de modelos y artefactos
 mlflow.set_tracking_uri('http://localhost:5000')
 # registre el experimento
-experiment = mlflow.set_experiment("Saber2020")
+experiment = mlflow.set_experiment("Saber_2020")
 
 # Aquí se ejecuta MLflow sin especificar un nombre o id del experimento. MLflow los crea un experimento para este cuaderno por defecto y guarda las características del experimento y las métricas definidas. 
 # Para ver el resultado de las corridas haga click en Experimentos en el menú izquierdo. 
@@ -296,4 +296,4 @@ def update_graph(selected_feature):
 
 # Run the app
 if __name__ == "__main__":
-    app.run_server(host='0.0.0.0', debug=True)
+    app.run_server(host='0.0.0.0', debug=False)

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ubuntu/regresion_saber2020/app/mlruns/732923425119413867/3d4247b2c3654d50ab7fbbb9200b9574/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '732923425119413867'
+lifecycle_stage: active
+run_id: 3d4247b2c3654d50ab7fbbb9200b9574
+run_name: bittersweet-goat-76
+run_uuid: 3d4247b2c3654d50ab7fbbb9200b9574
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731190925904
+status: 1
+tags: []
+user_id: ubuntu

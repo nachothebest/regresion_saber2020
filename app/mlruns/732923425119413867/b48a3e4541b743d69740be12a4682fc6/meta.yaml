@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ubuntu/regresion_saber2020/app/mlruns/732923425119413867/b48a3e4541b743d69740be12a4682fc6/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '732923425119413867'
+lifecycle_stage: active
+run_id: b48a3e4541b743d69740be12a4682fc6
+run_name: sneaky-cub-89
+run_uuid: b48a3e4541b743d69740be12a4682fc6
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731189911092
+status: 1
+tags: []
+user_id: ubuntu

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ubuntu/regresion_saber2020/app/mlruns/732923425119413867/ac677a0abdaa41569f91de2664b7dd18/artifacts
+end_time: 1731190054295
+entry_point_name: ''
+experiment_id: '732923425119413867'
+lifecycle_stage: active
+run_id: ac677a0abdaa41569f91de2664b7dd18
+run_name: luminous-whale-194
+run_uuid: ac677a0abdaa41569f91de2664b7dd18
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731190045589
+status: 3
+tags: []
+user_id: ubuntu
