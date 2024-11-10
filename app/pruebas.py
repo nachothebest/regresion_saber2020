@@ -1,10 +1,10 @@
+from datetime import datetime
 import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
 import warnings
-import plotly.graph_objects as go
 import numpy as np
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
@@ -39,18 +39,18 @@ saber_2020['AGE'] = saber_2020['ESTU_FECHANACIMIENTO'].apply(parse_date).apply(
 saber_2020.drop('ESTU_FECHANACIMIENTO', axis=1, inplace=True)
 
 columns_of_interest = [
-    'ESTU_NACIONALIDAD', 'ESTU_GENERO', 'AGE', 'PERIODO', 'ESTU_TIENEETNIA', 'FAMI_ESTRATOVIVIENDA', 
+    'ESTU_NACIONALIDAD', 'ESTU_GENERO', 'PERIODO', 'ESTU_TIENEETNIA', 'FAMI_ESTRATOVIVIENDA', 
     'FAMI_PERSONASHOGAR', 'FAMI_EDUCACIONPADRE', 'FAMI_EDUCACIONMADRE', 'FAMI_TIENEINTERNET', 'FAMI_NUMLIBROS', 
     'ESTU_DEDICACIONLECTURADIARIA', 'ESTU_HORASSEMANATRABAJA', 'COLE_NATURALEZA', 'COLE_CALENDARIO', 'PUNT_GLOBAL'
 ]
 
 saber_2020_subset = saber_2020[columns_of_interest]
 categorical_columns = [col for col in saber_2020_subset.columns if saber_2020_subset[col].dtype == 'object']
-numeric_columns = ['AGE', 'PERIODO', 'PUNT_GLOBAL']
+numeric_columns = ['PERIODO', 'PUNT_GLOBAL']
 
 imputer = SimpleImputer(strategy='mean')
 saber_2020_subset[numeric_columns] = imputer.fit_transform(saber_2020_subset[numeric_columns])
-saber_2020_encoded = pd.get_dummies(saber_2020_subset, columns=categorical_columns, drop_first=True)
+saber_2020_encoded = pd.get_dummies(saber_2020_subset, columns=categorical_columns, drop_first=False)
 
 # Iniciar el servidor de MLflow y registrar experimentos
 mlflow.set_tracking_uri('http://localhost:5000')
@@ -67,11 +67,13 @@ with mlflow.start_run(experiment_id=experiment.experiment_id):
 
 # Nombres más amigables para la interfaz
 feature_names = {
-    "ESTU_GENERO": "Género", "AGE": "Edad", "FAMI_ESTRATOVIVIENDA": "Estrato Vivienda",
+    "ESTU_GENERO": "Género", "FAMI_ESTRATOVIVIENDA": "Estrato Vivienda",
     "FAMI_PERSONASHOGAR": "Personas en Hogar", "FAMI_EDUCACIONMADRE": "Educación Madre",
     "FAMI_EDUCACIONPADRE": "Educación Padre", "FAMI_TIENEINTERNET": "Internet en Hogar",
     "ESTU_TIENEETNIA": "Pertenencia Étnica", "PERIODO": "Periodo Escolar", "FAMI_NUMLIBROS": "Número de Libros",
-    "COLE_NATURALEZA": "Naturaleza Colegio", "PUNT_GLOBAL": "Puntaje Global"
+    "COLE_NATURALEZA": "Naturaleza Colegio", "PUNT_GLOBAL": "Puntaje Global", "COLE_CALENDARIO": "Calendario colegio",
+    "ESTU_HORASSEMANATRABAJA": "Horas de trabajo semanales", "ESTU_DEDICACIONLECTURADIARIA": "Lectura diaria"
+    "ESTU_NACIONALIDAD": "Nacionalidad"
 }
 
 # Configurar Dash
@@ -79,18 +81,16 @@ app = dash.Dash(__name__)
 app.layout = html.Div(style={'font-family': 'Arial'}, children=[
     html.H1("Explorador de Datos Saber 2020", style={'textAlign': 'center', 'color': '#4CAF50'}),
     html.Div([
-        html.Label("Seleccione una Característica para Visualizar:"),
+        html.Label("Seleccione una Característica para Visualizar:", style={'font-weight': 'bold'}),
         dcc.Dropdown(
             id="feature-dropdown",
-            options=[{"label": feature_names.get(f, f), "value": f} for f in feature_names],
-            value="AGE", clearable=False
+            options=[{"label": feature_names.get(f, f), "value": f} for f in columns_of_interest if f not in ['PUNT_GLOBAL', 'AGE']],
+            value="ESTU_GENERO", clearable=False
         ),
     ], style={'width': '50%', 'margin': 'auto'}),
     html.Br(),
     html.Div([
-        dcc.Graph(id="feature-plot"),
-        html.Button("Descargar Gráfico", id="download-button"),
-        dcc.Download(id="download-plot")
+        dcc.Graph(id="feature-plot")
     ]),
     html.Div(id="feature-info", style={'padding': '20px', 'textAlign': 'center'}),
     html.Hr(),
@@ -107,31 +107,31 @@ app.layout = html.Div(style={'font-family': 'Arial'}, children=[
     [Input("feature-dropdown", "value")]
 )
 def update_graph(selected_feature):
-    if saber_2020_encoded[selected_feature].dtype == 'object' or saber_2020_encoded[selected_feature].nunique() < 10:
+    if selected_feature in categorical_columns:
+        # Variables categóricas: combinar las columnas de dummies y agrupar datos
+        dummies = [col for col in saber_2020_encoded.columns if col.startswith(selected_feature)]
+        melted_df = saber_2020_encoded[dummies].idxmax(axis=1).apply(lambda x: x.split('_')[-1])
+        saber_2020_encoded['category'] = melted_df
+        
         fig = px.box(
-            saber_2020_encoded, x=selected_feature, y="PUNT_GLOBAL", 
+            saber_2020_encoded, x="category", y="PUNT_GLOBAL",
             title=f"{feature_names.get(selected_feature, selected_feature)} vs. Puntaje Global",
-            labels={selected_feature: feature_names.get(selected_feature, selected_feature), "PUNT_GLOBAL": "Puntaje Global"}
+            labels={"category": feature_names.get(selected_feature, selected_feature), "PUNT_GLOBAL": "Puntaje Global"}
         )
         description = f"Distribución del puntaje global para cada categoría de {feature_names.get(selected_feature, selected_feature)}."
     else:
+        # Variables numéricas
         fig = px.scatter(
             saber_2020_encoded, x=selected_feature, y="PUNT_GLOBAL", trendline="ols",
             title=f"{feature_names.get(selected_feature, selected_feature)} vs. Puntaje Global",
             labels={selected_feature: feature_names.get(selected_feature, selected_feature), "PUNT_GLOBAL": "Puntaje Global"}
         )
         description = f"Relación entre {feature_names.get(selected_feature, selected_feature)} y el puntaje global."
+    
+    # Actualizar el diseño del gráfico
     fig.update_layout(template="plotly_white", margin=dict(t=50))
     return fig, description
 
-# Callback para descargar el gráfico
-@app.callback(
-    Output("download-plot", "data"),
-    [Input("download-button", "n_clicks"), Input("feature-plot", "figure")]
-)
-def download_plot(n_clicks, figure):
-    if n_clicks:
-        return dcc.send_data_frame(pd.DataFrame(figure['data'][0]).to_csv, "grafico.csv")
-
 if __name__ == "__main__":
     app.run_server(host='0.0.0.0', debug=False)  # Mantiene el puerto predeterminado (8050)
+
