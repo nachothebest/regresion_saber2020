@@ -226,13 +226,42 @@ coef_df = pd.DataFrame({
 })
 
 # Defino mis variables relevantes, aquellas que tienen un mayor coeficiente 
-relevant_features = [
+relevant_features_original = [
+    'ESTU_NACIONALIDAD',
+    'ESTU_GENERO',
+    'ESTU_TIENEETNIA',
+    'FAMI_ESTRATOVIVIENDA',
+    'FAMI_PERSONASHOGAR',
+    'FAMI_EDUCACIONPADRE',
+    'FAMI_EDUCACIONMADRE',
+    'FAMI_TIENEINTERNET',
+    'FAMI_TIENECONSOLAVIDEOJUEGOS',
+    'FAMI_NUMLIBROS',
+    'ESTU_DEDICACIONLECTURADIARIA',
+    'ESTU_DEDICACIONINTERNET',
+    'ESTU_HORASSEMANATRABAJA',
+    'COLE_GENERO',
+    'COLE_NATURALEZA',
+    'COLE_CALENDARIO',
+    'COLE_CARACTER',
+    'COLE_AREA_UBICACION',
+    'COLE_JORNADA',
+    'PERIODO',
+    'AGE',
+    'ESTU_COD_RESIDE_DEPTO',
+    'COLE_CODIGO_ICFES',
+    'COLE_COD_DEPTO_UBICACION'
+]
+
+
+relevant_features_encoded = [
     "COLE_JORNADA_SABATINA",
     "COLE_JORNADA_NOCHE",
     "COLE_GENERO_MIXTO",
     "COLE_JORNADA_TARDE",
     "COLE_JORNADA_MAÑANA",
     "COLE_JORNADA_UNICA",
+    "FAMI_ESTRATOVIVIENDA_Sin Estrato",
     "FAMI_NUMLIBROS_26 A 100 LIBROS",
     "FAMI_NUMLIBROS_MÁS DE 100 LIBROS", 
     "ESTU_TIENEETNIA_Si", 
@@ -250,17 +279,17 @@ relevant_features = [
 
 
 
-
 # Filtro las que son solo relevantes (mayor coeficientes absolutos) y las organizo por el valor de coeficiente absoluto
 coef_df['abs_coefficient'] = coef_df['coefficient'].abs()
-coef_df = coef_df[coef_df['feature'].isin(relevant_features)]
+coef_df = coef_df[coef_df['feature'].isin(relevant_features_encoded)]
 coef_df = coef_df.sort_values(by='abs_coefficient', ascending=False)
 
 
-# Inicializo la app de Dash
+
+# Inicializar la app de Dash
 app = dash.Dash(__name__)
 
-# Maquetación de la app con opciones de visualización
+# Layout de la app con opciones de visualización
 app.layout = html.Div([
     html.Div(
         [
@@ -288,27 +317,27 @@ app.layout = html.Div([
             html.H1("Análisis de Variables y PUNT_GLOBAL"),
             html.Div(
                 [
-                    html.H3("Relevancia de las Características en el Modelo de Regresión", id="relevance-chart"),
+                    html.H3("Relevancia de las Características Codificadas en el Modelo de Regresión", id="relevance-chart"),
                     dcc.Graph(id="relevance-bar-chart")
                 ],
-                style={'padding': '20px'},  
+                style={'padding': '20px'},  # Mostrado por defecto
                 id="div-relevancia"
             ),
 
             html.Div(
                 [
-                    html.H3("Selecciona una Característica:", id="individual-visualization"),
+                    html.H3("Selecciona una Característica Original:", id="individual-visualization"),
                     dcc.Dropdown(
                         id="feature-dropdown",
-                        options=[{"label": feature, "value": feature} for feature in relevant_features],
-                        value=relevant_features[0],
+                        options=[{"label": feature, "value": feature} for feature in relevant_features_original],
+                        value=relevant_features_original[0],
                     ),
                     html.Div([
                         html.H3("Relación con PUNT_GLOBAL"),
                         dcc.Graph(id="feature-plot")
                     ]),
                 ],
-                style={'padding': '20px', 'display': 'none'},  
+                style={'padding': '20px', 'display': 'none'},  # Oculto por defecto
                 id="div-individual"
             ),
         ],
@@ -316,7 +345,7 @@ app.layout = html.Div([
     ),
 ], className="container")
 
-# Creo callback para mostrar el gráfico de relevancia o la visualización individual según el botón seleccionado
+# Callback para mostrar el gráfico de relevancia o la visualización individual según el botón seleccionado
 @app.callback(
     [Output("div-relevancia", "style"),
      Output("div-individual", "style")],
@@ -326,7 +355,7 @@ app.layout = html.Div([
 def toggle_section(btn_relevancia, btn_individual):
     ctx = dash.callback_context
     if not ctx.triggered:
-        
+        # Mostrar el gráfico de relevancia por defecto al cargar
         return {'display': 'block'}, {'display': 'none'}
     else:
         button_id = ctx.triggered[0]['prop_id'].split('.')[0]
@@ -336,7 +365,7 @@ def toggle_section(btn_relevancia, btn_individual):
             return {'display': 'none'}, {'display': 'block'}
     return {'display': 'none'}, {'display': 'none'}
 
-# Creo Callback para actualizar el gráfico de relevancia de las características
+# Callback para actualizar el gráfico de relevancia de las características codificadas
 @app.callback(
     Output("relevance-bar-chart", "figure"),
     Input("feature-dropdown", "value")
@@ -346,33 +375,46 @@ def update_relevance_chart(selected_feature):
         coef_df,
         x="feature",
         y="abs_coefficient",
-        title="Relevancia de Cada Característica en el Modelo de Regresión",
+        title="Relevancia de Cada Característica Codificada en el Modelo de Regresión",
         labels={"abs_coefficient": "Valor Absoluto del Coeficiente"},
     )
-    fig.update_layout(xaxis_title="Característica", yaxis_title="Relevancia (|Coeficiente|)", template="plotly_white")
+    fig.update_layout(xaxis_title="Característica Codificada", yaxis_title="Relevancia (|Coeficiente|)", template="plotly_white")
     return fig
 
-# Creo Callback para actualizar la visualización individual según la característica seleccionada
+# Callback para actualizar la visualización individual con variables originales
 @app.callback(
     Output("feature-plot", "figure"),
     Input("feature-dropdown", "value")
 )
 def update_feature_plot(selected_feature):
-    if saber_2020_encoded[selected_feature].dtype == 'object' or saber_2020_encoded[selected_feature].nunique() < 10:
+    # Verifica si la variable seleccionada es categórica o numérica
+    if selected_feature in saber_2020.select_dtypes(include=['object']).columns:
+        # Si es categórica, muestra un boxplot con cada categoría
         fig = px.box(
-            saber_2020_encoded,
+            saber_2020,
             x=selected_feature,
             y="PUNT_GLOBAL",
             title=f"Distribución de {selected_feature} en Relación a PUNT_GLOBAL"
         )
-    else:
+    elif selected_feature in saber_2020.select_dtypes(include=[np.number]).columns:
+        # Si es numérica, muestra un scatter plot con línea de regresión en color rojo
         fig = px.scatter(
-            saber_2020_encoded,
+            saber_2020,
             x=selected_feature,
             y="PUNT_GLOBAL",
             trendline="ols",
-            title=f"Dispersión de {selected_feature} con Línea de Regresión en Relación a PUNT_GLOBAL"
+            trendline_color_override="red",  # Cambiar color de la línea de tendencia a rojo
+            title=f"Relación entre {selected_feature} y PUNT_GLOBAL con Línea de Tendencia"
         )
+    else:
+        # Si es un tipo no compatible (por ejemplo, booleano), muestra un scatter plot sin línea de tendencia
+        fig = px.scatter(
+            saber_2020,
+            x=selected_feature,
+            y="PUNT_GLOBAL",
+            title=f"Relación entre {selected_feature} y PUNT_GLOBAL"
+        )
+    
     fig.update_layout(
         xaxis_title=selected_feature,
         yaxis_title="PUNT_GLOBAL",
@@ -380,7 +422,7 @@ def update_feature_plot(selected_feature):
     )
     return fig
 
-# Creo CSS personalizado para mejorar el diseño
+# CSS personalizado para mejorar el diseño
 app.index_string = '''
 <!DOCTYPE html>
 <html>
@@ -432,7 +474,6 @@ app.index_string = '''
     </body>
 </html>
 '''
-
-# Ejecuto la app
+# Run the app
 if __name__ == "__main__":
     app.run_server(host='0.0.0.0', debug=False)
