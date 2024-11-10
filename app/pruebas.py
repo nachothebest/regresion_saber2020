@@ -72,7 +72,7 @@ feature_names = {
     "FAMI_EDUCACIONPADRE": "Educación Padre", "FAMI_TIENEINTERNET": "Internet en Hogar",
     "ESTU_TIENEETNIA": "Pertenencia Étnica", "PERIODO": "Periodo Escolar", "FAMI_NUMLIBROS": "Número de Libros",
     "COLE_NATURALEZA": "Naturaleza Colegio", "PUNT_GLOBAL": "Puntaje Global", "COLE_CALENDARIO": "Calendario colegio",
-    "ESTU_HORASSEMANATRABAJA": "Horas de trabajo semanales", "ESTU_DEDICACIONLECTURADIARIA": "Lectura diaria"
+    "ESTU_HORASSEMANATRABAJA": "Horas de trabajo semanales", "ESTU_DEDICACIONLECTURADIARIA": "Lectura diaria",
     "ESTU_NACIONALIDAD": "Nacionalidad"
 }
 
