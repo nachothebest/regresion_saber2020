@@ -58,9 +58,11 @@ experiment = mlflow.set_experiment("Saber_2020")
 X_train, X_test, y_train, y_test = train_test_split(saber_2020_encoded.drop(columns='PUNT_GLOBAL'), saber_2020_encoded['PUNT_GLOBAL'])
 
 with mlflow.start_run(experiment_id=experiment.experiment_id):
-    la = Lasso(alpha=0.0001)
+    alpha = 0.0001
+    la = Lasso(alpha=alpha)
     la.fit(X_train, y_train)
     predictions = la.predict(X_test)
+    mlflow.log_param("alpha", alpha)
     mse = mean_squared_error(y_test, predictions)
     mlflow.log_metric("mse", mse)
     mlflow.sklearn.log_model(la, "lasso")
