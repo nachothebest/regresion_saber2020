@@ -211,15 +211,28 @@ with mlflow.start_run(experiment_id=experiment.experiment_id):
     mlflow.log_metric("mse", mse)
     print(mse)
 
-# Define relevant features
+# Calculo número total de observaciones
+total_observations = len(saber_2020_encoded)
+
+#Agregamos el puntaje global al dataframe de encoded para comparaciones
+saber_2020_encoded['PUNT_GLOBAL'] = saber_2020['PUNT_GLOBAL']
+coefficients = la.coef_
+
+# Creo un DataFrame para asociar cada nombre de las variables con su coeficiente
+feature_names = X.columns if isinstance(X, pd.DataFrame) else [f"feature_{i}" for i in range(X.shape[1])]
+coef_df = pd.DataFrame({
+    "feature": feature_names,
+    "coefficient": coefficients
+})
+
+# Defino mis variables relevantes, aquellas que tienen un mayor coeficiente 
 relevant_features = [
     "COLE_JORNADA_SABATINA",
     "COLE_JORNADA_NOCHE",
     "COLE_GENERO_MIXTO",
     "COLE_JORNADA_TARDE",
     "COLE_JORNADA_MAÑANA",
-    "COLE_JORNADA_UNICA"
-    "FAMI_ESTRATOVIVIENDA_Sin Estrato",
+    "COLE_JORNADA_UNICA",
     "FAMI_NUMLIBROS_26 A 100 LIBROS",
     "FAMI_NUMLIBROS_MÁS DE 100 LIBROS", 
     "ESTU_TIENEETNIA_Si", 
@@ -233,67 +246,193 @@ relevant_features = [
     "FAMI_TIENEINTERNET_Si" 
 ]
 
-saber_2020_encoded['PUNT_GLOBAL'] = saber_2020['PUNT_GLOBAL']
 
-# Initialize the Dash app
+
+
+
+
+# Filtro las que son solo relevantes (mayor coeficientes absolutos) y las organizo por el valor de coeficiente absoluto
+coef_df['abs_coefficient'] = coef_df['coefficient'].abs()
+coef_df = coef_df[coef_df['feature'].isin(relevant_features)]
+coef_df = coef_df.sort_values(by='abs_coefficient', ascending=False)
+
+
+# Inicializo la app de Dash
 app = dash.Dash(__name__)
 
-# Layout for the app
+# Maquetación de la app con opciones de visualización
 app.layout = html.Div([
-    html.H1("Relationship Between Relevant Features and [PUNT_GLOBAL]"),
-    
-    # Dropdown to select feature
-    html.Label("Select a Feature:"),
-    dcc.Dropdown(
-        id="feature-dropdown",
-        options=[{"label": feature, "value": feature} for feature in relevant_features],
-        value=relevant_features[0],  # Default value
+    html.Div(
+        [
+            html.H2("Navegación", style={'textAlign': 'center'}),
+            html.Hr(),
+            html.P("Selecciona una sección:", style={'textAlign': 'center'}),
+            html.Div(
+                [
+                    html.Button("Gráfico de Relevancia", id="btn-relevancia", className="menu-button"),
+                    html.Br(),
+                    html.Br(),
+                    html.Button("Visualización Individual", id="btn-individual", className="menu-button"),
+                ],
+                style={'padding': '20px'}
+            ),
+            html.Hr(),
+            html.P(f"Total de Observaciones:", style={'textAlign': 'center', 'fontSize': '18px'}),
+            html.H2(f"{total_observations:,}", style={'textAlign': 'center', 'color': '#007bff'}),
+        ],
+        className="sidebar"
     ),
     
-    # Graph output
-    dcc.Graph(id="feature-plot"),
-    
-    # Display additional information
-    html.Div(id="feature-info", style={'padding': '20px'})
-])
+    html.Div(
+        [
+            html.H1("Análisis de Variables y PUNT_GLOBAL"),
+            html.Div(
+                [
+                    html.H3("Relevancia de las Características en el Modelo de Regresión", id="relevance-chart"),
+                    dcc.Graph(id="relevance-bar-chart")
+                ],
+                style={'padding': '20px'},  
+                id="div-relevancia"
+            ),
 
-# Callback to update the graph based on the selected feature
+            html.Div(
+                [
+                    html.H3("Selecciona una Característica:", id="individual-visualization"),
+                    dcc.Dropdown(
+                        id="feature-dropdown",
+                        options=[{"label": feature, "value": feature} for feature in relevant_features],
+                        value=relevant_features[0],
+                    ),
+                    html.Div([
+                        html.H3("Relación con PUNT_GLOBAL"),
+                        dcc.Graph(id="feature-plot")
+                    ]),
+                ],
+                style={'padding': '20px', 'display': 'none'},  
+                id="div-individual"
+            ),
+        ],
+        className="content"
+    ),
+], className="container")
+
+# Creo callback para mostrar el gráfico de relevancia o la visualización individual según el botón seleccionado
 @app.callback(
-    [Output("feature-plot", "figure"),
-     Output("feature-info", "children")],
-    [Input("feature-dropdown", "value")]
+    [Output("div-relevancia", "style"),
+     Output("div-individual", "style")],
+    [Input("btn-relevancia", "n_clicks"),
+     Input("btn-individual", "n_clicks")]
 )
-def update_graph(selected_feature):
-    # Check if the selected feature is categorical or numeric
+def toggle_section(btn_relevancia, btn_individual):
+    ctx = dash.callback_context
+    if not ctx.triggered:
+        
+        return {'display': 'block'}, {'display': 'none'}
+    else:
+        button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        if button_id == "btn-relevancia":
+            return {'display': 'block'}, {'display': 'none'}
+        elif button_id == "btn-individual":
+            return {'display': 'none'}, {'display': 'block'}
+    return {'display': 'none'}, {'display': 'none'}
+
+# Creo Callback para actualizar el gráfico de relevancia de las características
+@app.callback(
+    Output("relevance-bar-chart", "figure"),
+    Input("feature-dropdown", "value")
+)
+def update_relevance_chart(selected_feature):
+    fig = px.bar(
+        coef_df,
+        x="feature",
+        y="abs_coefficient",
+        title="Relevancia de Cada Característica en el Modelo de Regresión",
+        labels={"abs_coefficient": "Valor Absoluto del Coeficiente"},
+    )
+    fig.update_layout(xaxis_title="Característica", yaxis_title="Relevancia (|Coeficiente|)", template="plotly_white")
+    return fig
+
+# Creo Callback para actualizar la visualización individual según la característica seleccionada
+@app.callback(
+    Output("feature-plot", "figure"),
+    Input("feature-dropdown", "value")
+)
+def update_feature_plot(selected_feature):
     if saber_2020_encoded[selected_feature].dtype == 'object' or saber_2020_encoded[selected_feature].nunique() < 10:
-        # Use box plot for categorical features
         fig = px.box(
             saber_2020_encoded,
             x=selected_feature,
             y="PUNT_GLOBAL",
-            title=f"Box Plot of {selected_feature} vs. [PUNT_GLOBAL]"
+            title=f"Distribución de {selected_feature} en Relación a PUNT_GLOBAL"
         )
-        description = f"The box plot shows the distribution of [PUNT_GLOBAL] for each category of {selected_feature}."
     else:
-        # Use scatter plot for numerical features
         fig = px.scatter(
             saber_2020_encoded,
             x=selected_feature,
             y="PUNT_GLOBAL",
             trendline="ols",
-            title=f"Scatter Plot of {selected_feature} vs. [PUNT_GLOBAL]"
+            title=f"Dispersión de {selected_feature} con Línea de Regresión en Relación a PUNT_GLOBAL"
         )
-        description = f"The scatter plot shows the relationship between {selected_feature} and [PUNT_GLOBAL]."
-    
-    # Style the plot
     fig.update_layout(
         xaxis_title=selected_feature,
-        yaxis_title="[PUNT_GLOBAL]",
+        yaxis_title="PUNT_GLOBAL",
         template="plotly_white"
     )
-    
-    return fig, description
+    return fig
 
-# Run the app
+# Creo CSS personalizado para mejorar el diseño
+app.index_string = '''
+<!DOCTYPE html>
+<html>
+    <head>
+        {%metas%}
+        <title>Dashboard</title>
+        {%favicon%}
+        {%css%}
+        <style>
+            .container {
+                display: flex;
+                height: 100vh;
+                font-family: Arial, sans-serif;
+            }
+            .sidebar {
+                width: 20%;
+                background-color: #f1f3f5;
+                padding: 10px;
+                border-right: 2px solid #ccc;
+            }
+            .content {
+                width: 80%;
+                padding: 20px;
+            }
+            .menu-button {
+                display: block;
+                width: 100%;
+                padding: 10px;
+                font-size: 16px;
+                color: white;
+                background-color: #007bff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin: 5px 0;
+            }
+            .menu-button:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        {%app_entry%}
+        <footer>
+            {%config%}
+            {%scripts%}
+            {%renderer%}
+        </footer>
+    </body>
+</html>
+'''
+
+# Ejecuto la app
 if __name__ == "__main__":
-    app.run_server(host='0.0.0.0', debug=False)
+    app.run_server(debug=True)
