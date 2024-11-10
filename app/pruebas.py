@@ -39,14 +39,14 @@ saber_2020['AGE'] = saber_2020['ESTU_FECHANACIMIENTO'].apply(parse_date).apply(
 saber_2020.drop('ESTU_FECHANACIMIENTO', axis=1, inplace=True)
 
 columns_of_interest = [
-    'ESTU_NACIONALIDAD', 'ESTU_GENERO', 'PERIODO', 'ESTU_TIENEETNIA', 'FAMI_ESTRATOVIVIENDA', 
+    'ESTU_NACIONALIDAD', 'ESTU_GENERO', 'ESTU_TIENEETNIA', 'FAMI_ESTRATOVIVIENDA', 
     'FAMI_PERSONASHOGAR', 'FAMI_EDUCACIONPADRE', 'FAMI_EDUCACIONMADRE', 'FAMI_TIENEINTERNET', 'FAMI_NUMLIBROS', 
-    'ESTU_DEDICACIONLECTURADIARIA', 'ESTU_HORASSEMANATRABAJA', 'COLE_NATURALEZA', 'COLE_CALENDARIO', 'PUNT_GLOBAL'
+    'ESTU_DEDICACIONLECTURADIARIA', 'ESTU_HORASSEMANATRABAJA', 'COLE_NATURALEZA', 'COLE_CALENDARIO', 'PUNT_GLOBAL', 'COLE_JORNADA'
 ]
 
 saber_2020_subset = saber_2020[columns_of_interest]
 categorical_columns = [col for col in saber_2020_subset.columns if saber_2020_subset[col].dtype == 'object']
-numeric_columns = ['PERIODO', 'PUNT_GLOBAL']
+numeric_columns = ['PUNT_GLOBAL']
 
 imputer = SimpleImputer(strategy='mean')
 saber_2020_subset[numeric_columns] = imputer.fit_transform(saber_2020_subset[numeric_columns])
@@ -73,7 +73,7 @@ feature_names = {
     "ESTU_TIENEETNIA": "Pertenencia Étnica", "PERIODO": "Periodo Escolar", "FAMI_NUMLIBROS": "Número de Libros",
     "COLE_NATURALEZA": "Naturaleza Colegio", "PUNT_GLOBAL": "Puntaje Global", "COLE_CALENDARIO": "Calendario colegio",
     "ESTU_HORASSEMANATRABAJA": "Horas de trabajo semanales", "ESTU_DEDICACIONLECTURADIARIA": "Lectura diaria",
-    "ESTU_NACIONALIDAD": "Nacionalidad"
+    "ESTU_NACIONALIDAD": "Nacionalidad", "COLE_JORNADA": "Jornada"
 }
 
 # Configurar Dash
