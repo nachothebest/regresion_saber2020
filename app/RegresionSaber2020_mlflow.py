@@ -1,30 +1,20 @@
-
 import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
 import warnings
-import plotly.graph_objects as go
-import plotly.express as px
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score
 import numpy as np
-from sklearn.preprocessing import LabelEncoder
-import missingno as msno
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LassoCV
 from sklearn.linear_model import Lasso
 from sklearn.model_selection import train_test_split
-
+from sklearn.metrics import mean_squared_error
+import mlflow
+import mlflow.sklearn
+from datetime import datetime
 
 # Importo los datos
-
 warnings.filterwarnings('ignore')
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
@@ -34,9 +24,6 @@ archivo_2020_2 = '../data/Saber_11__2020-2_20241024.csv'
 saber_2020_1 = pd.read_csv(archivo_2020_1)
 saber_2020_2 = pd.read_csv(archivo_2020_2)
 saber_2020 = pd.concat([saber_2020_1, saber_2020_2], ignore_index=True)
-
-from datetime import datetime
-
 
 # Cambio Fecha a Edad 
 def parse_date(date_str):
@@ -48,10 +35,10 @@ def parse_date(date_str):
         except ValueError:
             return date_str
 
-# Aplicar funcion a fecha nacimiento
+# Aplicar función a fecha nacimiento
 saber_2020['ESTU_FECHANACIMIENTO'] = saber_2020['ESTU_FECHANACIMIENTO'].apply(parse_date)
 
-# Cacular edad
+# Calcular edad
 def calculate_age(birth_date):
     if isinstance(birth_date, pd.Timestamp):
         today = datetime.now()
@@ -60,7 +47,7 @@ def calculate_age(birth_date):
     else:
         return None
 
-# Calculate age using the new function
+# Calcular edad usando la nueva función
 saber_2020['AGE'] = saber_2020['ESTU_FECHANACIMIENTO'].apply(calculate_age)
 
 saber_2020.drop('ESTU_FECHANACIMIENTO', axis=1, inplace=True)
@@ -93,7 +80,7 @@ columns_of_interest = [
     'COLE_COD_DEPTO_UBICACION'
 ]
 
-# Dividimos columnas en categóricas y numericas
+# Dividimos columnas en categóricas y numéricas
 saber_2020_subset = saber_2020[columns_of_interest]
 
 categorical_columns = [
@@ -126,34 +113,29 @@ numeric_columns = [
     'COLE_COD_DEPTO_UBICACION'
 ]
 
-
-# Imputamos valores faltante categoricos
+# Imputamos valores faltantes categóricos
 categorical_imputer = SimpleImputer(strategy='most_frequent')
 saber_2020_subset[categorical_columns] = categorical_imputer.fit_transform(saber_2020_subset[categorical_columns])
 
-# Imputamos valores faltante numericos
+# Imputamos valores faltantes numéricos
 numeric_imputer = SimpleImputer(strategy='mean')
 saber_2020_subset[numeric_columns] = numeric_imputer.fit_transform(saber_2020_subset[numeric_columns])
 
 # Encoding
-
-# convertimos las variavles categóricas en dummies, transformando en columnas nuevas con 0 y 1.
 saber_2020_encoded = pd.get_dummies(saber_2020_subset, columns=categorical_columns, drop_first=True)
 
-# quitamos columnas que tienen mucha colinealidad
+# Quitamos columnas que tienen mucha colinealidad
 columns_to_drop = ['COLE_CODIGO_ICFES', 'ESTU_NACIONALIDAD_VENEZUELA', 'FAMI_PERSONASHOGAR_5 a 6', 'COLE_CALENDARIO_B']
-
-# aplicamos cambios al df
 saber_2020_encoded.drop(columns=columns_to_drop, inplace=True)
 
-# Columnas numericas que vamos a estandarizar
+# Columnas numéricas que vamos a estandarizar
 numeric_columns = ['AGE', 'PERIODO', 'ESTU_COD_RESIDE_DEPTO', 'COLE_COD_DEPTO_UBICACION']
 
-# Separamos los datos para no cometer errores
+# Separar datos
 numeric_data = saber_2020_encoded[numeric_columns]
 categorical_data = saber_2020_encoded.drop(columns=numeric_columns)
 
-# estandarizar numericas
+# Estandarizar numéricas
 scaler = StandardScaler()
 numeric_data_scaled = scaler.fit_transform(numeric_data)
 
@@ -161,60 +143,41 @@ numeric_data_scaled = scaler.fit_transform(numeric_data)
 numeric_data_scaled_df = pd.DataFrame(numeric_data_scaled, columns=numeric_columns, index=saber_2020_encoded.index)
 saber_2020_scaled = pd.concat([numeric_data_scaled_df, categorical_data], axis=1)
 
-#mlflow
-
+# MLflow
 X = saber_2020_scaled
-
 y = saber_2020['PUNT_GLOBAL']
 
 y = y.values.reshape(-1, 1)
 
-# Use an imputer to fill NaN values in y (e.g., with the mean of y)
+# Imputar valores faltantes en y
 imputer = SimpleImputer(strategy='mean')
 y = imputer.fit_transform(y)
-
-# Convert back to a 1D array if necessary for your model
 y = y.ravel()
 
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-#Importe MLFlow para registrar los experimentos, el regresor de bosques aleatorios y la métrica de error cuadrático medio
-import mlflow
-import mlflow.sklearn
-
-
-# defina el servidor para llevar el registro de modelos y artefactos
+# Configuración de MLflow
 mlflow.set_tracking_uri('http://localhost:5000')
-# registre el experimento
 experiment = mlflow.set_experiment("Saber_2020")
 
-# Aquí se ejecuta MLflow sin especificar un nombre o id del experimento. MLflow los crea un experimento para este cuaderno por defecto y guarda las características del experimento y las métricas definidas. 
-# Para ver el resultado de las corridas haga click en Experimentos en el menú izquierdo. 
 with mlflow.start_run(experiment_id=experiment.experiment_id):
-    # defina los parámetros del modelo
+    # Parámetros del modelo
     alpha = 0.0001
-    # Cree el modelo con los parámetros definidos y entrénelo
     la = Lasso(alpha=alpha)
     la.fit(X_train, y_train)
-    # Realice predicciones de prueba
     predictions = la.predict(X_test)
   
-    # Registre los parámetros
+    # Registrar parámetros y métricas
     mlflow.log_param("alpha", alpha)
-
-  
-    # Registre el modelo
     mlflow.sklearn.log_model(la, "lasso")
-  
-    # Cree y registre la métrica de interés
     mse = mean_squared_error(y_test, predictions)
     mlflow.log_metric("mse", mse)
     print(mse)
 
-# Calculo número total de observaciones
+# Cálculo de número total de observaciones
 total_observations = len(saber_2020_encoded)
 
-#Agregamos el puntaje global al dataframe de encoded para comparaciones
+# Agregamos el puntaje global al dataframe de encoded para comparaciones
 saber_2020_encoded['PUNT_GLOBAL'] = saber_2020['PUNT_GLOBAL']
 coefficients = la.coef_
 
@@ -253,7 +216,6 @@ relevant_features_original = [
     'COLE_COD_DEPTO_UBICACION'
 ]
 
-
 relevant_features_encoded = [
     "COLE_JORNADA_SABATINA",
     "COLE_JORNADA_NOCHE",
@@ -265,7 +227,6 @@ relevant_features_encoded = [
     "FAMI_NUMLIBROS_26 A 100 LIBROS",
     "FAMI_NUMLIBROS_MÁS DE 100 LIBROS", 
     "ESTU_TIENEETNIA_Si", 
-    "FAMI_ESTRATOVIVIENDA_Sin Estrato",
     "FAMI_EDUCACIONPADRE_Postgrado",
     "FAMI_EDUCACIONMADRE_Postgrado",
     "FAMI_EDUCACIONMADRE_No Aplica",
@@ -275,16 +236,62 @@ relevant_features_encoded = [
     "FAMI_TIENEINTERNET_Si" 
 ]
 
+# Mapeo de nombres amigables para variables originales
+friendly_names = {
+    'ESTU_NACIONALIDAD': 'Nacionalidad',
+    'ESTU_GENERO': 'Género del Estudiante',
+    'AGE': 'Edad',
+    'PERIODO': 'Periodo',
+    'ESTU_TIENEETNIA': 'Tiene Etnia',
+    'ESTU_COD_RESIDE_DEPTO': 'Departamento de Residencia',
+    'FAMI_ESTRATOVIVIENDA': 'Estrato de Vivienda',
+    'FAMI_PERSONASHOGAR': 'Personas en el Hogar',
+    'FAMI_EDUCACIONPADRE': 'Educación del Padre',
+    'FAMI_EDUCACIONMADRE': 'Educación de la Madre',
+    'FAMI_TIENEINTERNET': 'Tiene Internet',
+    'FAMI_TIENECONSOLAVIDEOJUEGOS': 'Tiene Consola de Videojuegos',
+    'FAMI_NUMLIBROS': 'Número de Libros',
+    'ESTU_DEDICACIONLECTURADIARIA': 'Dedicación a Lectura Diaria',
+    'ESTU_DEDICACIONINTERNET': 'Dedicación a Internet',
+    'ESTU_HORASSEMANATRABAJA': 'Horas Semanales de Trabajo',
+    'COLE_CODIGO_ICFES': 'Código ICFES del Colegio',
+    'COLE_GENERO': 'Género del Colegio',
+    'COLE_NATURALEZA': 'Naturaleza del Colegio',
+    'COLE_CALENDARIO': 'Calendario del Colegio',
+    'COLE_CARACTER': 'Carácter del Colegio',
+    'COLE_AREA_UBICACION': 'Área de Ubicación del Colegio',
+    'COLE_JORNADA': 'Jornada del Colegio',
+    'COLE_COD_DEPTO_UBICACION': 'Departamento de Ubicación del Colegio'
+}
 
+# Mapeo de nombres amigables para variables codificadas
+friendly_names_encoded = {
+    'COLE_JORNADA_SABATINA': 'Jornada del Colegio: Sabatina',
+    'COLE_JORNADA_NOCHE': 'Jornada del Colegio: Noche',
+    'COLE_GENERO_MIXTO': 'Género del Colegio: Mixto',
+    'COLE_JORNADA_TARDE': 'Jornada del Colegio: Tarde',
+    'COLE_JORNADA_MAÑANA': 'Jornada del Colegio: Mañana',
+    'COLE_JORNADA_UNICA': 'Jornada del Colegio: Única',
+    'FAMI_ESTRATOVIVIENDA_Sin Estrato': 'Estrato de Vivienda: Sin Estrato',
+    'FAMI_NUMLIBROS_26 A 100 LIBROS': 'Número de Libros: 26 a 100 libros',
+    'FAMI_NUMLIBROS_MÁS DE 100 LIBROS': 'Número de Libros: Más de 100 libros',
+    'ESTU_TIENEETNIA_Si': 'Tiene Etnia: Sí',
+    'FAMI_EDUCACIONPADRE_Postgrado': 'Educación del Padre: Postgrado',
+    'FAMI_EDUCACIONMADRE_Postgrado': 'Educación de la Madre: Postgrado',
+    'FAMI_EDUCACIONMADRE_No Aplica': 'Educación de la Madre: No Aplica',
+    'FAMI_EDUCACIONMADRE_Primaria incompleta': 'Educación de la Madre: Primaria Incompleta',
+    'ESTU_DEDICACIONLECTURADIARIA_Más de 2 horas': 'Dedicación a Lectura Diaria: Más de 2 horas',
+    'FAMI_EDUCACIONMADRE_Ninguno': 'Educación de la Madre: Ninguno',
+    'FAMI_TIENEINTERNET_Si': 'Tiene Internet: Sí'
+}
 
-
-
-# Filtro las que son solo relevantes (mayor coeficientes absolutos) y las organizo por el valor de coeficiente absoluto
+# Filtro de características relevantes y organización por valor absoluto del coeficiente
 coef_df['abs_coefficient'] = coef_df['coefficient'].abs()
 coef_df = coef_df[coef_df['feature'].isin(relevant_features_encoded)]
 coef_df = coef_df.sort_values(by='abs_coefficient', ascending=False)
 
-
+# Aplicamos nombres amigables a las características
+coef_df['feature'] = coef_df['feature'].map(friendly_names_encoded).fillna(coef_df['feature'])
 
 # Inicializar la app de Dash
 app = dash.Dash(__name__)
@@ -318,7 +325,20 @@ app.layout = html.Div([
             html.Div(
                 [
                     html.H3("Relevancia de las Características Codificadas en el Modelo de Regresión", id="relevance-chart"),
-                    dcc.Graph(id="relevance-bar-chart")
+                    dcc.Graph(
+                        id="relevance-bar-chart",
+                        figure=px.bar(
+                            coef_df,
+                            x="feature",
+                            y="abs_coefficient",
+                            title="Relevancia de Cada Característica Codificada en el Modelo de Regresión",
+                            labels={"feature": "Característica Codificada", "abs_coefficient": "Valor Absoluto del Coeficiente"},
+                        ).update_layout(
+                            xaxis_title="Característica Codificada",
+                            yaxis_title="Relevancia (|Coeficiente|)",
+                            template="plotly_white"
+                        )
+                    )
                 ],
                 style={'padding': '20px'},  # Mostrado por defecto
                 id="div-relevancia"
@@ -329,7 +349,7 @@ app.layout = html.Div([
                     html.H3("Selecciona una Característica Original:", id="individual-visualization"),
                     dcc.Dropdown(
                         id="feature-dropdown",
-                        options=[{"label": feature, "value": feature} for feature in relevant_features_original],
+                        options=[{"label": friendly_names.get(feature, feature), "value": feature} for feature in relevant_features_original],
                         value=relevant_features_original[0],
                     ),
                     html.Div([
@@ -345,7 +365,7 @@ app.layout = html.Div([
     ),
 ], className="container")
 
-# Callback para mostrar el gráfico de relevancia o la visualización individual según el botón seleccionado
+# Callback para mostrar la sección correspondiente
 @app.callback(
     [Output("div-relevancia", "style"),
      Output("div-individual", "style")],
@@ -355,7 +375,6 @@ app.layout = html.Div([
 def toggle_section(btn_relevancia, btn_individual):
     ctx = dash.callback_context
     if not ctx.triggered:
-        # Mostrar el gráfico de relevancia por defecto al cargar
         return {'display': 'block'}, {'display': 'none'}
     else:
         button_id = ctx.triggered[0]['prop_id'].split('.')[0]
@@ -365,64 +384,45 @@ def toggle_section(btn_relevancia, btn_individual):
             return {'display': 'none'}, {'display': 'block'}
     return {'display': 'none'}, {'display': 'none'}
 
-# Callback para actualizar el gráfico de relevancia de las características codificadas
-@app.callback(
-    Output("relevance-bar-chart", "figure"),
-    Input("feature-dropdown", "value")
-)
-def update_relevance_chart(selected_feature):
-    fig = px.bar(
-        coef_df,
-        x="feature",
-        y="abs_coefficient",
-        title="Relevancia de Cada Característica Codificada en el Modelo de Regresión",
-        labels={"abs_coefficient": "Valor Absoluto del Coeficiente"},
-    )
-    fig.update_layout(xaxis_title="Característica Codificada", yaxis_title="Relevancia (|Coeficiente|)", template="plotly_white")
-    return fig
-
-# Callback para actualizar la visualización individual con variables originales
+# Callback para actualizar la visualización individual
 @app.callback(
     Output("feature-plot", "figure"),
     Input("feature-dropdown", "value")
 )
 def update_feature_plot(selected_feature):
-    # Verifica si la variable seleccionada es categórica o numérica
+    friendly_label = friendly_names.get(selected_feature, selected_feature)
     if selected_feature in saber_2020.select_dtypes(include=['object']).columns:
-        # Si es categórica, muestra un boxplot con cada categoría
         fig = px.box(
             saber_2020,
             x=selected_feature,
             y="PUNT_GLOBAL",
-            title=f"Distribución de {selected_feature} en Relación a PUNT_GLOBAL"
+            title=f"Distribución de {friendly_label} en Relación a PUNT_GLOBAL"
         )
     elif selected_feature in saber_2020.select_dtypes(include=[np.number]).columns:
-        # Si es numérica, muestra un scatter plot con línea de regresión en color rojo
         fig = px.scatter(
             saber_2020,
             x=selected_feature,
             y="PUNT_GLOBAL",
             trendline="ols",
-            trendline_color_override="red",  # Cambiar color de la línea de tendencia a rojo
-            title=f"Relación entre {selected_feature} y PUNT_GLOBAL con Línea de Tendencia"
+            trendline_color_override="red",
+            title=f"Relación entre {friendly_label} y PUNT_GLOBAL con Línea de Tendencia"
         )
     else:
-        # Si es un tipo no compatible (por ejemplo, booleano), muestra un scatter plot sin línea de tendencia
         fig = px.scatter(
             saber_2020,
             x=selected_feature,
             y="PUNT_GLOBAL",
-            title=f"Relación entre {selected_feature} y PUNT_GLOBAL"
+            title=f"Relación entre {friendly_label} y PUNT_GLOBAL"
         )
     
     fig.update_layout(
-        xaxis_title=selected_feature,
+        xaxis_title=friendly_label,
         yaxis_title="PUNT_GLOBAL",
         template="plotly_white"
     )
     return fig
 
-# CSS personalizado para mejorar el diseño
+# CSS personalizado
 app.index_string = '''
 <!DOCTYPE html>
 <html>
@@ -474,6 +474,7 @@ app.index_string = '''
     </body>
 </html>
 '''
-# Run the app
+
+# Ejecutar la app
 if __name__ == "__main__":
     app.run_server(host='0.0.0.0', debug=False)
