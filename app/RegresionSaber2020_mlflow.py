@@ -59,7 +59,6 @@ columns_of_interest = [
     'AGE',
     'PERIODO',
     'ESTU_TIENEETNIA',
-    'ESTU_COD_RESIDE_DEPTO',
     'FAMI_ESTRATOVIVIENDA',
     'FAMI_PERSONASHOGAR',
     'FAMI_EDUCACIONPADRE',
@@ -70,14 +69,12 @@ columns_of_interest = [
     'ESTU_DEDICACIONLECTURADIARIA',
     'ESTU_DEDICACIONINTERNET',
     'ESTU_HORASSEMANATRABAJA',
-    'COLE_CODIGO_ICFES',
     'COLE_GENERO',
     'COLE_NATURALEZA',
     'COLE_CALENDARIO',
     'COLE_CARACTER',
     'COLE_AREA_UBICACION',
-    'COLE_JORNADA',
-    'COLE_COD_DEPTO_UBICACION'
+    'COLE_JORNADA'
 ]
 
 # Dividimos columnas en categóricas y numéricas
@@ -107,10 +104,7 @@ categorical_columns = [
 
 numeric_columns = [
     'PERIODO',
-    'AGE',
-    'ESTU_COD_RESIDE_DEPTO',
-    'COLE_CODIGO_ICFES',
-    'COLE_COD_DEPTO_UBICACION'
+    'AGE'
 ]
 
 # Imputamos valores faltantes categóricos
@@ -125,11 +119,11 @@ saber_2020_subset[numeric_columns] = numeric_imputer.fit_transform(saber_2020_su
 saber_2020_encoded = pd.get_dummies(saber_2020_subset, columns=categorical_columns, drop_first=True)
 
 # Quitamos columnas que tienen mucha colinealidad
-columns_to_drop = ['COLE_CODIGO_ICFES', 'ESTU_NACIONALIDAD_VENEZUELA', 'FAMI_PERSONASHOGAR_5 a 6', 'COLE_CALENDARIO_B']
+columns_to_drop = ['ESTU_NACIONALIDAD_VENEZUELA', 'FAMI_PERSONASHOGAR_5 a 6', 'COLE_CALENDARIO_B']
 saber_2020_encoded.drop(columns=columns_to_drop, inplace=True)
 
 # Columnas numéricas que vamos a estandarizar
-numeric_columns = ['AGE', 'PERIODO', 'ESTU_COD_RESIDE_DEPTO', 'COLE_COD_DEPTO_UBICACION']
+numeric_columns = ['AGE', 'PERIODO']
 
 # Separar datos
 numeric_data = saber_2020_encoded[numeric_columns]
@@ -210,10 +204,7 @@ relevant_features_original = [
     'COLE_AREA_UBICACION',
     'COLE_JORNADA',
     'PERIODO',
-    'AGE',
-    'ESTU_COD_RESIDE_DEPTO',
-    'COLE_CODIGO_ICFES',
-    'COLE_COD_DEPTO_UBICACION'
+    'AGE'
 ]
 
 relevant_features_encoded = [
@@ -243,7 +234,6 @@ friendly_names = {
     'AGE': 'Edad',
     'PERIODO': 'Periodo',
     'ESTU_TIENEETNIA': 'Tiene Etnia',
-    'ESTU_COD_RESIDE_DEPTO': 'Departamento de Residencia',
     'FAMI_ESTRATOVIVIENDA': 'Estrato de Vivienda',
     'FAMI_PERSONASHOGAR': 'Personas en el Hogar',
     'FAMI_EDUCACIONPADRE': 'Educación del Padre',
@@ -254,14 +244,12 @@ friendly_names = {
     'ESTU_DEDICACIONLECTURADIARIA': 'Dedicación a Lectura Diaria',
     'ESTU_DEDICACIONINTERNET': 'Dedicación a Internet',
     'ESTU_HORASSEMANATRABAJA': 'Horas Semanales de Trabajo',
-    'COLE_CODIGO_ICFES': 'Código ICFES del Colegio',
     'COLE_GENERO': 'Género del Colegio',
     'COLE_NATURALEZA': 'Naturaleza del Colegio',
     'COLE_CALENDARIO': 'Calendario del Colegio',
     'COLE_CARACTER': 'Carácter del Colegio',
     'COLE_AREA_UBICACION': 'Área de Ubicación del Colegio',
-    'COLE_JORNADA': 'Jornada del Colegio',
-    'COLE_COD_DEPTO_UBICACION': 'Departamento de Ubicación del Colegio'
+    'COLE_JORNADA': 'Jornada del Colegio'
 }
 
 # Mapeo de nombres amigables para variables codificadas
@@ -321,7 +309,7 @@ app.layout = html.Div([
     
     html.Div(
         [
-            html.H1("Análisis de Variables y PUNT_GLOBAL"),
+            html.H1("Análisis de Variables y Puntaje global"),
             html.Div(
                 [
                     html.H3("Relevancia de las Características Codificadas en el Modelo de Regresión", id="relevance-chart"),
@@ -353,7 +341,7 @@ app.layout = html.Div([
                         value=relevant_features_original[0],
                     ),
                     html.Div([
-                        html.H3("Relación con PUNT_GLOBAL"),
+                        html.H3("Relación con Puntaje global"),
                         dcc.Graph(id="feature-plot")
                     ]),
                 ],
@@ -396,7 +384,7 @@ def update_feature_plot(selected_feature):
             saber_2020,
             x=selected_feature,
             y="PUNT_GLOBAL",
-            title=f"Distribución de {friendly_label} en Relación a PUNT_GLOBAL"
+            title=f"Distribución de {friendly_label} en Relación al Puntaje global"
         )
     elif selected_feature in saber_2020.select_dtypes(include=[np.number]).columns:
         fig = px.scatter(
@@ -405,14 +393,14 @@ def update_feature_plot(selected_feature):
             y="PUNT_GLOBAL",
             trendline="ols",
             trendline_color_override="red",
-            title=f"Relación entre {friendly_label} y PUNT_GLOBAL con Línea de Tendencia"
+            title=f"Relación entre {friendly_label} y Puntaje global con Línea de Tendencia"
         )
     else:
         fig = px.scatter(
             saber_2020,
             x=selected_feature,
             y="PUNT_GLOBAL",
-            title=f"Relación entre {friendly_label} y PUNT_GLOBAL"
+            title=f"Relación entre {friendly_label} y Puntaje global"
         )
     
     fig.update_layout(
