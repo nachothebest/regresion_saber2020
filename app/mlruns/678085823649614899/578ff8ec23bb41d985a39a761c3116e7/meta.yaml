@@ -1,0 +1,16 @@
+artifact_uri: file:///home/ubuntu/regresion_saber2020/app/mlruns/678085823649614899/578ff8ec23bb41d985a39a761c3116e7/artifacts
+deleted_time: 1731363125956
+end_time: 1731362528848
+entry_point_name: ''
+experiment_id: '678085823649614899'
+lifecycle_stage: deleted
+run_id: 578ff8ec23bb41d985a39a761c3116e7
+run_name: ElasticNet_alpha_0.0001_l1_ratio_0.9
+run_uuid: 578ff8ec23bb41d985a39a761c3116e7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731362521312
+status: 3
+tags: []
+user_id: ubuntu
