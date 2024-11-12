@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/1970150dd97f4f56b0ea52228cd0f906/artifacts
+deleted_time: 1731205763170
+end_time: 1731192346965
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 1970150dd97f4f56b0ea52228cd0f906
+run_name: entertaining-rat-238
+run_uuid: 1970150dd97f4f56b0ea52228cd0f906
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731192338125
+status: 3
+tags: []
+user_id: ubuntu

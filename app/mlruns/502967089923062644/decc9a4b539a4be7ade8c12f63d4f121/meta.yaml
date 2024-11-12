@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/decc9a4b539a4be7ade8c12f63d4f121/artifacts
+deleted_time: 1731273858418
+end_time: 1731270449376
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: decc9a4b539a4be7ade8c12f63d4f121
+run_name: wise-lamb-681
+run_uuid: decc9a4b539a4be7ade8c12f63d4f121
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731270441393
+status: 3
+tags: []
+user_id: ubuntu

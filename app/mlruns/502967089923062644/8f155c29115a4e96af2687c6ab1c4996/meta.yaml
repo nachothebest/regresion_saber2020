@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/8f155c29115a4e96af2687c6ab1c4996/artifacts
+deleted_time: 1731273858227
+end_time: 1731272239673
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 8f155c29115a4e96af2687c6ab1c4996
+run_name: defiant-pug-601
+run_uuid: 8f155c29115a4e96af2687c6ab1c4996
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731272232209
+status: 3
+tags: []
+user_id: ubuntu

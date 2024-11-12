@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/fdefa426f801413e8a9db092e09178f5/artifacts
+deleted_time: 1731207732112
+end_time: 1731207391656
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: fdefa426f801413e8a9db092e09178f5
+run_name: shivering-fish-988
+run_uuid: fdefa426f801413e8a9db092e09178f5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731207296613
+status: 3
+tags: []
+user_id: ubuntu

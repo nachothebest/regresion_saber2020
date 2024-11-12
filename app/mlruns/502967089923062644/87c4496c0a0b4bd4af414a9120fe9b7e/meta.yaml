@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/87c4496c0a0b4bd4af414a9120fe9b7e/artifacts
+deleted_time: 1731278152828
+end_time: 1731276432311
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 87c4496c0a0b4bd4af414a9120fe9b7e
+run_name: chill-moose-165
+run_uuid: 87c4496c0a0b4bd4af414a9120fe9b7e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731276424501
+status: 3
+tags: []
+user_id: ubuntu

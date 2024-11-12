@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/ad914494203749c486766e955e8eba38/artifacts
+deleted_time: 1731205763174
+end_time: 1731192554522
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: ad914494203749c486766e955e8eba38
+run_name: sassy-grub-289
+run_uuid: ad914494203749c486766e955e8eba38
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731192546007
+status: 3
+tags: []
+user_id: ubuntu

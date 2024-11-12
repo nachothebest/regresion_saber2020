@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/9a040c0df0964a3998b946b1c9b189a7/artifacts
+deleted_time: 1731207732313
+end_time: 1731204097500
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 9a040c0df0964a3998b946b1c9b189a7
+run_name: bittersweet-slug-151
+run_uuid: 9a040c0df0964a3998b946b1c9b189a7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731204067819
+status: 3
+tags: []
+user_id: ubuntu

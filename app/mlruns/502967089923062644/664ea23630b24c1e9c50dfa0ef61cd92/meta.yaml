@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/664ea23630b24c1e9c50dfa0ef61cd92/artifacts
+deleted_time: 1731273858219
+end_time: 1731273535004
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 664ea23630b24c1e9c50dfa0ef61cd92
+run_name: redolent-mink-935
+run_uuid: 664ea23630b24c1e9c50dfa0ef61cd92
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731273526230
+status: 3
+tags: []
+user_id: ubuntu

@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/b0f062cd0010486a8ab4b34a57cfeea9/artifacts
+deleted_time: 1731273858422
+end_time: 1731269215540
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: b0f062cd0010486a8ab4b34a57cfeea9
+run_name: stately-ram-416
+run_uuid: b0f062cd0010486a8ab4b34a57cfeea9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731269129045
+status: 3
+tags: []
+user_id: ubuntu

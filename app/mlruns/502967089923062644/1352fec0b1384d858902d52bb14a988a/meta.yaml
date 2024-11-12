@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/1352fec0b1384d858902d52bb14a988a/artifacts
+deleted_time: 1731207732322
+end_time: 1731193273610
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 1352fec0b1384d858902d52bb14a988a
+run_name: capable-swan-606
+run_uuid: 1352fec0b1384d858902d52bb14a988a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731193265094
+status: 3
+tags: []
+user_id: ubuntu

@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/6b7c9b0c027b47d3bce821061d74e72a/artifacts
+deleted_time: 1731273858429
+end_time: 1731268917318
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 6b7c9b0c027b47d3bce821061d74e72a
+run_name: nebulous-toad-147
+run_uuid: 6b7c9b0c027b47d3bce821061d74e72a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731268909332
+status: 3
+tags: []
+user_id: ubuntu

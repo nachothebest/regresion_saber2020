@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/48842a2ce3dd4dffacdf93cf0057ba2a/artifacts
+deleted_time: 1731278152829
+end_time: 1731275959280
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 48842a2ce3dd4dffacdf93cf0057ba2a
+run_name: popular-crane-744
+run_uuid: 48842a2ce3dd4dffacdf93cf0057ba2a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731275950958
+status: 3
+tags: []
+user_id: ubuntu

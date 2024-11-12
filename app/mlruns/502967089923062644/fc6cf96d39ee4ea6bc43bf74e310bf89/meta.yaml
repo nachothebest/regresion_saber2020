@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/fc6cf96d39ee4ea6bc43bf74e310bf89/artifacts
+deleted_time: 1731207732112
+end_time: 1731206420734
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: fc6cf96d39ee4ea6bc43bf74e310bf89
+run_name: smiling-swan-478
+run_uuid: fc6cf96d39ee4ea6bc43bf74e310bf89
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731206334172
+status: 3
+tags: []
+user_id: ubuntu

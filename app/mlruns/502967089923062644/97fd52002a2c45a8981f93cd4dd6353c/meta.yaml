@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/97fd52002a2c45a8981f93cd4dd6353c/artifacts
+deleted_time: 1731207732512
+end_time: null
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 97fd52002a2c45a8981f93cd4dd6353c
+run_name: debonair-turtle-703
+run_uuid: 97fd52002a2c45a8981f93cd4dd6353c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731192904372
+status: 1
+tags: []
+user_id: ubuntu

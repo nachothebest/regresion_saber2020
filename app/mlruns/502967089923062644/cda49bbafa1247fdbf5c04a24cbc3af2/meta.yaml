@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/cda49bbafa1247fdbf5c04a24cbc3af2/artifacts
+deleted_time: 1731207732114
+end_time: 1731204656141
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: cda49bbafa1247fdbf5c04a24cbc3af2
+run_name: learned-goat-142
+run_uuid: cda49bbafa1247fdbf5c04a24cbc3af2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731204634266
+status: 3
+tags: []
+user_id: ubuntu

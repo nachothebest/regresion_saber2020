@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/e7ebda8df1d2442484e0165cca15fd53/artifacts
+end_time: 1731278246671
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: active
+run_id: e7ebda8df1d2442484e0165cca15fd53
+run_name: whimsical-bug-798
+run_uuid: e7ebda8df1d2442484e0165cca15fd53
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731278239290
+status: 3
+tags: []
+user_id: ubuntu

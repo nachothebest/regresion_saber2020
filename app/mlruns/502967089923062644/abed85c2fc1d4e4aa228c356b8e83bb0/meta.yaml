@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/abed85c2fc1d4e4aa228c356b8e83bb0/artifacts
+end_time: 1731278747657
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: active
+run_id: abed85c2fc1d4e4aa228c356b8e83bb0
+run_name: rare-moth-427
+run_uuid: abed85c2fc1d4e4aa228c356b8e83bb0
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731278743293
+status: 3
+tags: []
+user_id: ubuntu

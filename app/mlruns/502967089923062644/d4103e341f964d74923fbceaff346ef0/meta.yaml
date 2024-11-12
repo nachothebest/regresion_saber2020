@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/d4103e341f964d74923fbceaff346ef0/artifacts
+end_time: 1731278559826
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: active
+run_id: d4103e341f964d74923fbceaff346ef0
+run_name: able-asp-251
+run_uuid: d4103e341f964d74923fbceaff346ef0
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731278554746
+status: 3
+tags: []
+user_id: ubuntu

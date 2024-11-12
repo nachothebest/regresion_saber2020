@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/94ae2b92378a47af8ba5cb02040d13c8/artifacts
+deleted_time: 1731273858619
+end_time: 1731249450146
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 94ae2b92378a47af8ba5cb02040d13c8
+run_name: overjoyed-bird-441
+run_uuid: 94ae2b92378a47af8ba5cb02040d13c8
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731249442356
+status: 3
+tags: []
+user_id: ubuntu

@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/f1c90a2ca95844ef9417180356fb5a7f/artifacts
+deleted_time: 1731207732114
+end_time: 1731205775111
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: f1c90a2ca95844ef9417180356fb5a7f
+run_name: monumental-moose-960
+run_uuid: f1c90a2ca95844ef9417180356fb5a7f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731205685263
+status: 3
+tags: []
+user_id: ubuntu

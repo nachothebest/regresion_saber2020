@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/880d20dbcea34988ba4e20deaaca1976/artifacts
+deleted_time: 1731273858226
+end_time: 1731272633365
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 880d20dbcea34988ba4e20deaaca1976
+run_name: chill-doe-655
+run_uuid: 880d20dbcea34988ba4e20deaaca1976
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731272625010
+status: 3
+tags: []
+user_id: ubuntu

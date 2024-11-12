@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/9bf3a0ca28dc42a1a185a936e8f1392b/artifacts
+deleted_time: 1731207732319
+end_time: 1731193947959
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 9bf3a0ca28dc42a1a185a936e8f1392b
+run_name: flawless-vole-48
+run_uuid: 9bf3a0ca28dc42a1a185a936e8f1392b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731193939945
+status: 3
+tags: []
+user_id: ubuntu

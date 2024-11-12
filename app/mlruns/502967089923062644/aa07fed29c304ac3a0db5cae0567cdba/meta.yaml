@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/aa07fed29c304ac3a0db5cae0567cdba/artifacts
+deleted_time: 1731275572547
+end_time: 1731273932076
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: aa07fed29c304ac3a0db5cae0567cdba
+run_name: fortunate-perch-945
+run_uuid: aa07fed29c304ac3a0db5cae0567cdba
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731273922847
+status: 3
+tags: []
+user_id: ubuntu

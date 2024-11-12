@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/e3d54cefdb04490ab2f2149b90adb25e/artifacts
+deleted_time: 1731273858431
+end_time: 1731250769162
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: e3d54cefdb04490ab2f2149b90adb25e
+run_name: intrigued-wren-900
+run_uuid: e3d54cefdb04490ab2f2149b90adb25e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731250761417
+status: 3
+tags: []
+user_id: ubuntu

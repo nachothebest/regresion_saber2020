@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/8342061b4de44f6a8268cbc373de1d6c/artifacts
+deleted_time: 1731279199139
+end_time: 1731278423559
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 8342061b4de44f6a8268cbc373de1d6c
+run_name: big-frog-776
+run_uuid: 8342061b4de44f6a8268cbc373de1d6c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731278417519
+status: 3
+tags: []
+user_id: ubuntu

@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/3d02bf71030c493c873651adce58c676/artifacts
+deleted_time: 1731273858221
+end_time: 1731270970061
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 3d02bf71030c493c873651adce58c676
+run_name: amusing-sow-908
+run_uuid: 3d02bf71030c493c873651adce58c676
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731270962295
+status: 3
+tags: []
+user_id: ubuntu

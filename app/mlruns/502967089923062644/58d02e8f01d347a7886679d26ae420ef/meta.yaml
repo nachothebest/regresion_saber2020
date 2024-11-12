@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/58d02e8f01d347a7886679d26ae420ef/artifacts
+deleted_time: 1731278152830
+end_time: 1731207856325
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 58d02e8f01d347a7886679d26ae420ef
+run_name: intrigued-duck-421
+run_uuid: 58d02e8f01d347a7886679d26ae420ef
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731207767039
+status: 3
+tags: []
+user_id: ubuntu

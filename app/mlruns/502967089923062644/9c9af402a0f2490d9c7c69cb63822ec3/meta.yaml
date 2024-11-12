@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/9c9af402a0f2490d9c7c69cb63822ec3/artifacts
+deleted_time: 1731275572549
+end_time: 1731274695341
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 9c9af402a0f2490d9c7c69cb63822ec3
+run_name: nebulous-sponge-846
+run_uuid: 9c9af402a0f2490d9c7c69cb63822ec3
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731274687488
+status: 3
+tags: []
+user_id: ubuntu

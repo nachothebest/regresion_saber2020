@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/b3caddfcf69341d4aebcf6092fae5b98/artifacts
+deleted_time: 1731273858618
+end_time: 1731249741127
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: b3caddfcf69341d4aebcf6092fae5b98
+run_name: inquisitive-mink-56
+run_uuid: b3caddfcf69341d4aebcf6092fae5b98
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731249732514
+status: 3
+tags: []
+user_id: ubuntu

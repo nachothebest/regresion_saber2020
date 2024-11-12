@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/eee9b1038a594c52854eeb8b7c76fd00/artifacts
+deleted_time: 1731275572548
+end_time: 1731274279775
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: eee9b1038a594c52854eeb8b7c76fd00
+run_name: melodic-robin-182
+run_uuid: eee9b1038a594c52854eeb8b7c76fd00
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731274271497
+status: 3
+tags: []
+user_id: ubuntu

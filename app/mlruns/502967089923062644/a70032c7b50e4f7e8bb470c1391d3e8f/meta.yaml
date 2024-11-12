@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/a70032c7b50e4f7e8bb470c1391d3e8f/artifacts
+deleted_time: 1731207732320
+end_time: null
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: a70032c7b50e4f7e8bb470c1391d3e8f
+run_name: rare-donkey-755
+run_uuid: a70032c7b50e4f7e8bb470c1391d3e8f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731193356086
+status: 1
+tags: []
+user_id: ubuntu

@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/485656482cd04b4aa564874135c7ad5f/artifacts
+deleted_time: 1731207732116
+end_time: 1731204497699
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 485656482cd04b4aa564874135c7ad5f
+run_name: capable-grub-706
+run_uuid: 485656482cd04b4aa564874135c7ad5f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731204478162
+status: 3
+tags: []
+user_id: ubuntu

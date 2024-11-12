@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/32c22ccb479c47deac5908843513a737/artifacts
+deleted_time: 1731273858418
+end_time: 1731270248970
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 32c22ccb479c47deac5908843513a737
+run_name: bald-squirrel-487
+run_uuid: 32c22ccb479c47deac5908843513a737
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731270165861
+status: 3
+tags: []
+user_id: ubuntu

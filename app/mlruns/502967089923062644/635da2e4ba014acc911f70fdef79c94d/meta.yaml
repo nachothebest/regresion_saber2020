@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/635da2e4ba014acc911f70fdef79c94d/artifacts
+deleted_time: 1731275572550
+end_time: 1731275451729
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 635da2e4ba014acc911f70fdef79c94d
+run_name: ambitious-fox-101
+run_uuid: 635da2e4ba014acc911f70fdef79c94d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731275443484
+status: 3
+tags: []
+user_id: ubuntu

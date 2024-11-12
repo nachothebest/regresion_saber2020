@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/c7fa35cfff60492f81dae146afbdcf04/artifacts
+deleted_time: 1731207732319
+end_time: 1731195328865
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: c7fa35cfff60492f81dae146afbdcf04
+run_name: efficient-tern-503
+run_uuid: c7fa35cfff60492f81dae146afbdcf04
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731195319165
+status: 3
+tags: []
+user_id: ubuntu

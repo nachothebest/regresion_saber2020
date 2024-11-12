@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/502967089923062644/49b65b27488041d9984b693a19f179e7/artifacts
+deleted_time: 1731273858225
+end_time: 1731271711890
+entry_point_name: ''
+experiment_id: '502967089923062644'
+lifecycle_stage: deleted
+run_id: 49b65b27488041d9984b693a19f179e7
+run_name: spiffy-trout-169
+run_uuid: 49b65b27488041d9984b693a19f179e7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731271704279
+status: 3
+tags: []
+user_id: ubuntu
