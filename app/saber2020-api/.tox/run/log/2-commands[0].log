@@ -1,0 +1,114 @@
+name: run
+run_id: commands[0]
+env HOME: /Users/joseRengifo
+env TMPDIR: /var/folders/31/pr3hq3552174dvy1tjy_54dw0000gn/T/
+env LANG: en_US.UTF-8
+env TERM: xterm-256color
+env PATH: /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/.tox/test_app/bin:/Users/joseRengifo/.vscode/extensions/ms-python.python-2024.20.0-darwin-arm64/python_files/deactivate/zsh:/Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/.venv/bin:/Library/Frameworks/Python.framework/Versions/3.13/bin:/Library/Frameworks/Python.framework/Versions/3.12/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
+env PYTHONHASHSEED: 58833445
+env PIP_DISABLE_PIP_VERSION_CHECK: 1
+env PYTHONIOENCODING: utf-8
+env PYTHONPATH: .
+env TOX_ENV_NAME: run
+env TOX_WORK_DIR: /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/.tox
+env TOX_ENV_DIR: /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/.tox/test_app
+env VIRTUAL_ENV: /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/.tox/test_app
+env COLUMNS: 184
+env LINES: 28
+metadata pid: 19823
+cwd: /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api
+allow: /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/.tox/test_app/bin/*
+cmd: python app/main.py
+exit_code: -15
+[32mINFO[0m:     127.0.0.1:59255 - "[1mGET / HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:59255 - "[1mGET /favicon.ico HTTP/1.1[0m" [31m404 Not Found[0m
+[32mINFO[0m:     127.0.0.1:59255 - "[1mGET /docs HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:59255 - "[1mGET /api/v1/openapi.json HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:59285 - "[1mGET /api/v1/health HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:59290 - "[1mPOST /api/v1/predict HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:59314 - "[1mPOST /api/v1/predict HTTP/1.1[0m" [32m200 OK[0m
+
+standard error:
+[32m2024-11-23 18:26:12.834[0m | [33m[1mWARNING [0m | [36m__main__[0m:[36m<module>[0m:[36m55[0m - [33m[1mRunning in development mode. Do not run like this in production.[0m
+[32mINFO[0m:     Started server process [[36m19823[0m]
+[32mINFO[0m:     Waiting for application startup.
+[32mINFO[0m:     Application startup complete.
+[32mINFO[0m:     Uvicorn running on [1mhttp://0.0.0.0:8001[0m (Press CTRL+C to quit)
+[32m2024-11-23 18:27:45.245[0m | [1mINFO    [0m | [36mapp.api[0m:[36mpredict[0m:[36m38[0m - [1mMaking prediction on inputs: [DataInputSchema(COLE_JORNADA='UNICA', COLE_GENERO='MIXTO', FAMI_EDUCACIONMADRE='Postgrado', FAMI_EDUCACIONPADRE='Postgrado', ESTU_TIENEETNIA='Si', FAMI_ESTRATOVIVIENDA='$Estrato 3', FAMI_NUMLIBROS='26 A 100 LIBROS', ESTU_DEDICACIONLECTURADIARIA='Más de 2 horas', FAMI_TIENEINTERNET='Si')][0m
+/Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/.tox/test_app/lib/python3.12/site-packages/sklearn/preprocessing/_encoders.py:228: UserWarning: Found unknown categories in columns [5] during transform. These unknown categories will be encoded as all zeros
+  warnings.warn(
+[32m2024-11-23 18:27:45.262[0m | [1mINFO    [0m | [36mapp.api[0m:[36mpredict[0m:[36m45[0m - [1mPrediction results: [301.6218611391356][0m
+[32m2024-11-23 18:28:32.591[0m | [1mINFO    [0m | [36mapp.api[0m:[36mpredict[0m:[36m38[0m - [1mMaking prediction on inputs: [DataInputSchema(COLE_JORNADA='UNICA', COLE_GENERO='MIXTO', FAMI_EDUCACIONMADRE='Postgrado', FAMI_EDUCACIONPADRE='Postgrado', ESTU_TIENEETNIA='Si', FAMI_ESTRATOVIVIENDA='Estrato 3', FAMI_NUMLIBROS='26 A 100 LIBROS', ESTU_DEDICACIONLECTURADIARIA='Más de 2 horas', FAMI_TIENEINTERNET='Si')][0m
+[32m2024-11-23 18:28:32.606[0m | [1mINFO    [0m | [36mapp.api[0m:[36mpredict[0m:[36m45[0m - [1mPrediction results: [303.9251366336804][0m
+[32mINFO[0m:     Shutting down
+[32mINFO[0m:     Finished server process [[36m19823[0m]
+[31mERROR[0m:    Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 1986, in _run_once
+    handle._run()
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/.tox/test_app/lib/python3.12/site-packages/uvicorn/server.py", line 68, in serve
+    with self.capture_signals():
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "/Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/.tox/test_app/lib/python3.12/site-packages/uvicorn/server.py", line 328, in capture_signals
+    signal.raise_signal(captured_signal)
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 157, in _on_sigint
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/.tox/test_app/lib/python3.12/site-packages/starlette/routing.py", line 700, in lifespan
+    await receive()
+  File "/Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/.tox/test_app/lib/python3.12/site-packages/uvicorn/lifespan/on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+Traceback (most recent call last):
+  File "/Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/app/main.py", line 59, in <module>
+    uvicorn.run(app, host="0.0.0.0", port=8001, log_level="debug")
+  File "/Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/.tox/test_app/lib/python3.12/site-packages/uvicorn/main.py", line 575, in run
+    server.run()
+  File "/Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/.tox/test_app/lib/python3.12/site-packages/uvicorn/server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 1986, in _run_once
+    handle._run()
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/.tox/test_app/lib/python3.12/site-packages/uvicorn/server.py", line 68, in serve
+    with self.capture_signals():
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "/Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/app/saber2020-api/.tox/test_app/lib/python3.12/site-packages/uvicorn/server.py", line 328, in capture_signals
+    signal.raise_signal(captured_signal)
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 157, in _on_sigint
+    raise KeyboardInterrupt()
+KeyboardInterrupt
