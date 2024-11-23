@@ -1,0 +1,90 @@
+name: train
+run_id: install_deps
+env HOME: /Users/joseRengifo
+env TMPDIR: /var/folders/31/pr3hq3552174dvy1tjy_54dw0000gn/T/
+env LANG: en_US.UTF-8
+env TERM: xterm-256color
+env PATH: /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/.tox/test_package/bin:/Users/joseRengifo/.vscode/extensions/ms-python.python-2024.20.0-darwin-arm64/python_files/deactivate/zsh:/Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/.venv/bin:/Library/Frameworks/Python.framework/Versions/3.13/bin:/Library/Frameworks/Python.framework/Versions/3.12/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
+env PIP_DISABLE_PIP_VERSION_CHECK: 1
+env PYTHONIOENCODING: utf-8
+env PYTHONPATH: .
+env PYTHONHASHSEED: 0
+env TOX_ENV_NAME: train
+env TOX_WORK_DIR: /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/.tox
+env TOX_ENV_DIR: /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/.tox/test_package
+env VIRTUAL_ENV: /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/.tox/test_package
+env COLUMNS: 204
+env LINES: 32
+metadata pid: 10114
+cwd: /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src
+allow: /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/.tox/test_package/bin/*:train
+cmd: pip install -r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/test_requirements.txt
+exit_code: 0
+Collecting numpy<2.0.0,>=1.23.0 (from -r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 4))
+  Using cached numpy-1.26.4-cp312-cp312-macosx_11_0_arm64.whl.metadata (61 kB)
+Collecting pandas<3.0.0,>=2.0.0 (from -r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 5))
+  Using cached pandas-2.2.3-cp312-cp312-macosx_11_0_arm64.whl.metadata (89 kB)
+Collecting scikit-learn<1.3.3,>=1.3.2 (from -r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 6))
+  Using cached scikit_learn-1.3.2-cp312-cp312-macosx_12_0_arm64.whl.metadata (11 kB)
+Collecting joblib<2.0.0,>=1.1.0 (from -r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 7))
+  Using cached joblib-1.4.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting pydantic<2.0.0,>=1.10.0 (from -r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 8))
+  Using cached pydantic-1.10.19-cp312-cp312-macosx_11_0_arm64.whl.metadata (152 kB)
+Collecting strictyaml<2.0.0,>=1.7.0 (from -r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 9))
+  Using cached strictyaml-1.7.3-py3-none-any.whl.metadata (11 kB)
+Collecting feature-engine<2.0.0,>=1.6.1 (from -r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 10))
+  Using cached feature_engine-1.8.2-py2.py3-none-any.whl.metadata (9.9 kB)
+Collecting pytest<8.0.0,>=7.4.2 (from -r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/test_requirements.txt (line 4))
+  Using cached pytest-7.4.4-py3-none-any.whl.metadata (7.9 kB)
+Collecting python-dateutil>=2.8.2 (from pandas<3.0.0,>=2.0.0->-r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 5))
+  Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting pytz>=2020.1 (from pandas<3.0.0,>=2.0.0->-r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 5))
+  Using cached pytz-2024.2-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas<3.0.0,>=2.0.0->-r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 5))
+  Using cached tzdata-2024.2-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting scipy>=1.5.0 (from scikit-learn<1.3.3,>=1.3.2->-r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 6))
+  Using cached scipy-1.14.1-cp312-cp312-macosx_14_0_arm64.whl.metadata (60 kB)
+Collecting threadpoolctl>=2.0.0 (from scikit-learn<1.3.3,>=1.3.2->-r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 6))
+  Using cached threadpoolctl-3.5.0-py3-none-any.whl.metadata (13 kB)
+Collecting typing-extensions>=4.2.0 (from pydantic<2.0.0,>=1.10.0->-r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 8))
+  Using cached typing_extensions-4.12.2-py3-none-any.whl.metadata (3.0 kB)
+INFO: pip is looking at multiple versions of feature-engine to determine which version is compatible with other requirements. This could take a while.
+Collecting feature-engine<2.0.0,>=1.6.1 (from -r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 10))
+  Using cached feature_engine-1.8.1-py2.py3-none-any.whl.metadata (9.8 kB)
+  Using cached feature_engine-1.8.0-py2.py3-none-any.whl.metadata (9.8 kB)
+  Using cached feature_engine-1.7.0-py2.py3-none-any.whl.metadata (9.8 kB)
+  Using cached feature_engine-1.6.2-py2.py3-none-any.whl.metadata (8.8 kB)
+Collecting statsmodels>=0.11.1 (from feature-engine<2.0.0,>=1.6.1->-r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 10))
+  Using cached statsmodels-0.14.4-cp312-cp312-macosx_11_0_arm64.whl.metadata (9.2 kB)
+Collecting iniconfig (from pytest<8.0.0,>=7.4.2->-r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/test_requirements.txt (line 4))
+  Using cached iniconfig-2.0.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting packaging (from pytest<8.0.0,>=7.4.2->-r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/test_requirements.txt (line 4))
+  Using cached packaging-24.2-py3-none-any.whl.metadata (3.2 kB)
+Collecting pluggy<2.0,>=0.12 (from pytest<8.0.0,>=7.4.2->-r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/test_requirements.txt (line 4))
+  Using cached pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas<3.0.0,>=2.0.0->-r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 5))
+  Using cached six-1.16.0-py2.py3-none-any.whl.metadata (1.8 kB)
+Collecting patsy>=0.5.6 (from statsmodels>=0.11.1->feature-engine<2.0.0,>=1.6.1->-r /Users/JoseRengifo/Documents/MaestriaStudying/Despliegue/Proyecto/package-src/requirements/requirements.txt (line 10))
+  Using cached patsy-1.0.1-py2.py3-none-any.whl.metadata (3.3 kB)
+Using cached numpy-1.26.4-cp312-cp312-macosx_11_0_arm64.whl (13.7 MB)
+Using cached pandas-2.2.3-cp312-cp312-macosx_11_0_arm64.whl (11.4 MB)
+Using cached scikit_learn-1.3.2-cp312-cp312-macosx_12_0_arm64.whl (9.3 MB)
+Using cached joblib-1.4.2-py3-none-any.whl (301 kB)
+Using cached pydantic-1.10.19-cp312-cp312-macosx_11_0_arm64.whl (2.2 MB)
+Using cached strictyaml-1.7.3-py3-none-any.whl (123 kB)
+Using cached feature_engine-1.6.2-py2.py3-none-any.whl (328 kB)
+Using cached pytest-7.4.4-py3-none-any.whl (325 kB)
+Using cached pluggy-1.5.0-py3-none-any.whl (20 kB)
+Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Using cached pytz-2024.2-py2.py3-none-any.whl (508 kB)
+Using cached scipy-1.14.1-cp312-cp312-macosx_14_0_arm64.whl (23.1 MB)
+Using cached statsmodels-0.14.4-cp312-cp312-macosx_11_0_arm64.whl (9.9 MB)
+Using cached packaging-24.2-py3-none-any.whl (65 kB)
+Using cached threadpoolctl-3.5.0-py3-none-any.whl (18 kB)
+Using cached typing_extensions-4.12.2-py3-none-any.whl (37 kB)
+Using cached tzdata-2024.2-py2.py3-none-any.whl (346 kB)
+Using cached iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+Using cached patsy-1.0.1-py2.py3-none-any.whl (232 kB)
+Using cached six-1.16.0-py2.py3-none-any.whl (11 kB)
+Installing collected packages: pytz, tzdata, typing-extensions, threadpoolctl, six, pluggy, packaging, numpy, joblib, iniconfig, scipy, python-dateutil, pytest, pydantic, patsy, strictyaml, scikit-learn, pandas, statsmodels, feature-engine
+Successfully installed feature-engine-1.6.2 iniconfig-2.0.0 joblib-1.4.2 numpy-1.26.4 packaging-24.2 pandas-2.2.3 patsy-1.0.1 pluggy-1.5.0 pydantic-1.10.19 pytest-7.4.4 python-dateutil-2.9.0.post0 pytz-2024.2 scikit-learn-1.3.2 scipy-1.14.1 six-1.16.0 statsmodels-0.14.4 strictyaml-1.7.3 threadpoolctl-3.5.0 typing-extensions-4.12.2 tzdata-2024.2
