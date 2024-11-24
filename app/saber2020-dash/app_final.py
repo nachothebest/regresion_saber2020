@@ -13,8 +13,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 
 # API URL
-api_url = os.getenv('API_URL')
-api_url = "http://{}:8001/api/v1/predict".format(api_url)
+api_url = "http://http://184.73.5.238:8001/api/v1/predict"
 
 # Layout de la aplicación
 app.layout = html.Div(
